@@ -57,14 +57,16 @@ function display5DayForecast(lat, lon) {
                 var forecastDaysContainer = document.getElementById("forecastDays");
 
             forecastDaysContainer.innerHTML = "";
+            forecastDaysContainer.classList.add("row")
 
             forecastDays.forEach(day => { 
                 if(day && day.main) {
                 var forecastDate = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
                 var forecastTemp = day.main.temp;
+                var forecastIcon = day.weather[0].icon;
                 
-                var forecastCard = document.createElement("div");
-                forecastCard.classList.add("col-md-2", "forecast-card");
+                var forecastCards = document.createElement("div");
+                forecastCards.classList.add("col-md-2", "forecast-card", "mb-3");
 
                 var dateEl = document.createElement("span");
                 dateEl.textContent = forecastDate;
@@ -72,10 +74,15 @@ function display5DayForecast(lat, lon) {
                 var tempEl = document.createElement("span");
                 tempEl.textContent = `${forecastTemp}°F`;
 
-                forecastCard.appendChild(dateEl);
-                forecastCard.appendChild(tempEl);
+                var iconEl = document.createElement("img");
+                iconEl.src = `http://openweathermap.org/img/w/${forecastIcon}.png`;
+                iconEl.alt = "Weather Icon";
 
-                forecastDaysContainer.appendChild(forecastCard)
+                forecastCards.appendChild(dateEl);
+                forecastCards.appendChild(tempEl);
+                forecastCards.appendChild(iconEl);
+
+                forecastDaysContainer.appendChild(forecastCards)
             } else {
             console.error("Error: Unable to fetch 5-day forecast data");
         }

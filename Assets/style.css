@@ -52,10 +52,6 @@ h1 {
 
 }
 
-.weather-data {
-
-    
-}
 
 .current-weather {
     background-color: var(--darkText);
@@ -72,3 +68,14 @@ h1 {
     width: 180px;
     height: 180px;
 }
+
+.forecast-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid var(--darkText);
+    border-radius: 5px;
+}
+
