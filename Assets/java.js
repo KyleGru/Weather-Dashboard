@@ -52,17 +52,18 @@ function display5DayForecast(lat, lon) {
             var forecastDays = data.list && data.list.filter(entry => entry.dt_txt.includes("12:00:00"));
 
             if(data.list) {
-                var forecastDays = data.list && data.list.filter(entry => entry.dt_txt.includes("12:00:00"));
+                var forecastDays = data.list.filter(entry => entry.dt_txt.includes("12:00:00"));
                 console.log("Filtered forecast data:", forecastDays);
                 var forecastDaysContainer = document.getElementById("forecastDays");
 
             forecastDaysContainer.innerHTML = "";
 
-            forecastDays.forEach(day => {
+            forecastDays.forEach(day => { 
+                if(day && day.main) {
                 var forecastDate = new Date(day.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-                var forecastTemp = day.temp.day;
+                var forecastTemp = day.main.temp;
                 
-                var forecastCard = document.createElement("li");
+                var forecastCard = document.createElement("div");
                 forecastCard.classList.add("col-md-2", "forecast-card");
 
                 var dateEl = document.createElement("span");
@@ -75,10 +76,11 @@ function display5DayForecast(lat, lon) {
                 forecastCard.appendChild(tempEl);
 
                 forecastDaysContainer.appendChild(forecastCard)
-            })
-        } else {
+            } else {
             console.error("Error: Unable to fetch 5-day forecast data");
         }
-        })
+        });
+    }
+})
         .catch(error => console.error("Error fetching 5-day forecast", error));
 }
